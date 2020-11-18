@@ -38,7 +38,7 @@ def t_OR(t):
 
 
 def t_CLINI(t):
-    r'\*|\\.\.\.'
+    r'\*|\.\.\.'
     global last_bracket, last_paren
     if last_bracket == 'LBRACKET' or last_paren == 'LPAREN':
         t.type = 'NAME'
