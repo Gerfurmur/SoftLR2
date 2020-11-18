@@ -54,12 +54,12 @@ def create_state_name(token):
 def create_state_bracket(token):
     global state_id
     token = lexer.lexer.token()
-    if token.value == "EMPTY":
-        token = lexer.lexer.token()
-        return []
     st_start = State(state_id)
     state_id += 1
     while token.type != "RBRACKET":
+        if token.type == "EMPTY":
+            token = lexer.lexer.token()
+            continue
         st_start.add_condition([state_id - 1, state_id, token.value])
         token = lexer.lexer.token()
     if len(st_start.get_conditions()) == 0:
@@ -73,12 +73,11 @@ def create_state_bracket(token):
 def create_state_paren(token):
     global state_id
     token = lexer.lexer.token()
-    if token.value == "EMPTY":
-        token = lexer.lexer.token()
-        token = lexer.lexer.token()
-        return []
     st_res = []
     while token.type != "RPAREN":
+        if token.type == "EMPTY":
+            token = lexer.lexer.token()
+            continue
         name_st_lst = create_state_name(token)
         if len(st_res) == 0:
             st_res.extend(name_st_lst)
@@ -138,6 +137,8 @@ def re_pars(reg):
         tok = lexer.lexer.token()
         if not tok:
             break
+        if tok.type == "EMPTY":
+            continue
         if tok.type == "LBRACKET":
             last_avt = create_state_bracket(tok)
             states.extend(last_avt)

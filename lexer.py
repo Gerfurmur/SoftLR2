@@ -3,7 +3,7 @@ import ply.lex as lex
 
 tokens = ('NAME', 'OR', 'CLINI', 'LPAREN', 'RPAREN', 'LBRACKET', 'RBRACKET', 'GROUP', 'TIMES', 'EMPTY')
 t_NAME = r'.'
-EMPTY = r'\$|\#'
+t_EMPTY = r'\$|\#'
 
 last_bracket = ''
 last_paren = ''
@@ -92,7 +92,7 @@ lexer = lex.lex()
 
 
 if __name__ == "__main__":
-    data = '[*;2(34)]{2}|(A*.BC)\\1(AB)*(a|b|cd)'
+    data = '[$]'
     lexer.input(data)
 
     while True:
